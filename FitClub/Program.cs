@@ -8,4 +8,11 @@ string city = "Tehran";
 int age = 25;
 Console.WriteLine($"FitClub now is available in {city} and Average age at registration is {age}");
 
+Console.WriteLine("please write member name:");
+string memberName = Console.ReadLine();
+Console.WriteLine("please write Monthly tuition fee:");
+decimal memberFee = decimal.Parse(Console.ReadLine());
+decimal yearlyFee = memberFee * 12;
+Console.WriteLine($"Member {memberName}\nYearly fee:{yearlyFee}");
+
 
