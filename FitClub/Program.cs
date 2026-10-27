@@ -2,6 +2,7 @@
 Console.WriteLine("=======");
 Console.WriteLine("Gym Management System");
 string gymName = "FitClub";
+
 int memberCount = 120;
 Console.WriteLine($"{gymName} has {memberCount} members.");
 string city = "Tehran";
@@ -58,4 +59,18 @@ else
     Console.WriteLine("Adult membership");
 }
 
+Console.WriteLine("How many members do you want to register?");
+int registerCount = int.Parse(Console.ReadLine());
+decimal totalFee = 0;
 
+for (int i = 0; i < registerCount; i++)
+{
+    Console.WriteLine("give name for membership:");
+    string newMemberName = Console.ReadLine();
+    Console.WriteLine("give fee for membership:");
+    decimal newMemberFee = decimal.Parse(Console.ReadLine());
+    decimal memberYearlyFee = newMemberFee *12;
+    Console.WriteLine(memberYearlyFee);
+    totalFee += memberYearlyFee;
+}
+Console.WriteLine(totalFee);
