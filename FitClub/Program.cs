@@ -14,5 +14,48 @@ Console.WriteLine("please write Monthly tuition fee:");
 decimal memberFee = decimal.Parse(Console.ReadLine());
 decimal yearlyFee = memberFee * 12;
 Console.WriteLine($"Member {memberName}\nYearly fee:{yearlyFee}");
+Console.WriteLine("please write numberkarbar:");
+int numberkarbar = int.Parse(Console.ReadLine());
+if (numberkarbar%2==0)
+
+{
+    Console.WriteLine("number is zoj");
+}
+else
+{
+    Console.WriteLine("number is fard");
+}
+Console.WriteLine("give me your age:");
+int memberage = int.Parse(Console.ReadLine());
+if (memberage<13)
+{
+    Console.WriteLine("member is kid");
+}
+else if (memberage>=13 && memberage<=17)
+{
+    Console.WriteLine("member is teen");
+}
+else
+{
+    Console.WriteLine("member is adult");
+}
+Console.WriteLine("Has the fee been paid? y/n");
+string feeInput = Console.ReadLine();
+if (feeInput  == "y")
+{
+    Console.WriteLine("The fee has been paid.");
+}
+else if (feeInput  == "n")
+{
+    Console.WriteLine("Payment required.");
+}
+if (memberage <18)
+{
+    Console.WriteLine("Youth membership");
+}
+else
+{
+    Console.WriteLine("Adult membership");
+}
 
 
