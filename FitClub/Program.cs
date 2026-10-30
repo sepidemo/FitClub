@@ -74,30 +74,78 @@ for (int i = 0; i < registerCount; i++)
     totalFee += memberYearlyFee;
 }
 Console.WriteLine(totalFee);
-Console.WriteLine("give your active status (y/n):");
-string? isActive = Console.ReadLine();
-Console.WriteLine("give your remaining capacity status:");
-int remainingCapacity = int.Parse(Console.ReadLine());
-if (isActive == "y")
+
+bool running = true;
+while (running)
 {
-    if (remainingCapacity > 0)
+    Console.WriteLine("1 - View member");
+    Console.WriteLine("2 - Check reservation");
+    Console.WriteLine("0 - Exit");
+    Console.WriteLine("Choose an option:");
+    int choice;
+    string input = Console.ReadLine();
+    bool isNumber = int.TryParse(input, out choice);
+
+    if (isNumber == false)
     {
-        Console.WriteLine("Booking is permitted.");
+        Console.WriteLine("Invalid input, please enter a number.");
+        continue;
     }
-    else if (remainingCapacity ==0 )
+    switch (choice)
     {
-        Console.WriteLine("Capacity is full.");
+        case 0:
+            Console.WriteLine("Exit");
+            running = false;
+            break;
+        case 1:
+            Console.WriteLine("View member selected");
+            Console.WriteLine("enter your name:");
+            string viewMemberName = Console.ReadLine();
+            Console.WriteLine("give your fee cost:");
+            decimal tuitionFee = decimal.Parse(Console.ReadLine());
+            string feePayment;
+
+
+            Console.WriteLine("Has the fee been paid? (y/n)");
+            string feepaid = Console.ReadLine();
+            bool isPaid = feepaid == "y";
+            feePayment = isPaid ? "paid" : "Payment required";
+            Console.WriteLine($"{viewMemberName} has {tuitionFee} and {feePayment}.");
+                break;
+        case 2:
+            Console.WriteLine("Check reservation selected");
+
+            Console.WriteLine("give your active status (y/n):");
+            string? isActive = Console.ReadLine();
+            Console.WriteLine("give your remaining capacity status:");
+            int remainingCapacity = int.Parse(Console.ReadLine());
+            if (isActive == "y")
+            {
+                if (remainingCapacity > 0)
+                {
+                    Console.WriteLine("Booking is permitted.");
+                }
+                else if (remainingCapacity == 0)
+                {
+                    Console.WriteLine("Capacity is full.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid capacity.");
+                }
+            }
+            else if (isActive == "n")
+            {
+                Console.WriteLine("Membership is inactive.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid status. Enter y or n.");
+            }
+
+            break;
+        default:
+            Console.WriteLine("Invalid choice, choose again please (0/1/2)");
+            break;
     }
-    else
-    {
-        Console.WriteLine("Invalid capacity.");
-    }
-}
-else if (isActive == "n")
-{
-    Console.WriteLine("Membership is inactive.");
-}
-else
-{
-    Console.WriteLine("Invalid status. Enter y or n.");
 }
