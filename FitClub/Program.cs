@@ -17,7 +17,7 @@ decimal yearlyFee = memberFee * 12;
 Console.WriteLine($"Member {memberName}\nYearly fee:{yearlyFee}");
 Console.WriteLine("please write numberkarbar:");
 int numberkarbar = int.Parse(Console.ReadLine());
-if (numberkarbar%2==0)
+if (numberkarbar % 2 == 0)
 
 {
     Console.WriteLine("number is zoj");
@@ -28,11 +28,11 @@ else
 }
 Console.WriteLine("give me your age:");
 int memberage = int.Parse(Console.ReadLine());
-if (memberage<13)
+if (memberage < 13)
 {
     Console.WriteLine("member is kid");
 }
-else if (memberage>=13 && memberage<=17)
+else if (memberage >= 13 && memberage <= 17)
 {
     Console.WriteLine("member is teen");
 }
@@ -42,15 +42,15 @@ else
 }
 Console.WriteLine("Has the fee been paid? y/n");
 string feeInput = Console.ReadLine();
-if (feeInput  == "y")
+if (feeInput == "y")
 {
     Console.WriteLine("The fee has been paid.");
 }
-else if (feeInput  == "n")
+else if (feeInput == "n")
 {
     Console.WriteLine("Payment required.");
 }
-if (memberage <18)
+if (memberage < 18)
 {
     Console.WriteLine("Youth membership");
 }
@@ -69,8 +69,35 @@ for (int i = 0; i < registerCount; i++)
     string newMemberName = Console.ReadLine();
     Console.WriteLine("give fee for membership:");
     decimal newMemberFee = decimal.Parse(Console.ReadLine());
-    decimal memberYearlyFee = newMemberFee *12;
+    decimal memberYearlyFee = newMemberFee * 12;
     Console.WriteLine(memberYearlyFee);
     totalFee += memberYearlyFee;
 }
 Console.WriteLine(totalFee);
+Console.WriteLine("give your active status (y/n):");
+string? isActive = Console.ReadLine();
+Console.WriteLine("give your remaining capacity status:");
+int remainingCapacity = int.Parse(Console.ReadLine());
+if (isActive == "y")
+{
+    if (remainingCapacity > 0)
+    {
+        Console.WriteLine("Booking is permitted.");
+    }
+    else if (remainingCapacity ==0 )
+    {
+        Console.WriteLine("Capacity is full.");
+    }
+    else
+    {
+        Console.WriteLine("Invalid capacity.");
+    }
+}
+else if (isActive == "n")
+{
+    Console.WriteLine("Membership is inactive.");
+}
+else
+{
+    Console.WriteLine("Invalid status. Enter y or n.");
+}
