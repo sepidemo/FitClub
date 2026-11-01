@@ -2,43 +2,67 @@
 Console.WriteLine("=======");
 Console.WriteLine("Gym Management System");
 string gymName = "FitClub";
-
 int memberCount = 120;
 Console.WriteLine($"{gymName} has {memberCount} members.");
 string city = "Tehran";
 int age = 25;
 Console.WriteLine($"FitClub now is available in {city} and Average age at registration is {age}");
-
 Console.WriteLine("please write member name:");
 string memberName = Console.ReadLine();
 Console.WriteLine("please write Monthly tuition fee:");
-decimal memberFee = decimal.Parse(Console.ReadLine());
-decimal yearlyFee = memberFee * 12;
-Console.WriteLine($"Member {memberName}\nYearly fee:{yearlyFee}");
-Console.WriteLine("please write numberkarbar:");
-int numberkarbar = int.Parse(Console.ReadLine());
-if (numberkarbar % 2 == 0)
-
+decimal memberFee;
+bool isFeeNumber = decimal.TryParse(Console.ReadLine(), out memberFee);
+if (isFeeNumber == false || memberFee < 0)
 {
-    Console.WriteLine("number is zoj");
+    Console.WriteLine("Invalid fee");
 }
 else
 {
-    Console.WriteLine("number is fard");
+    decimal yearlyFee = memberFee * 12;
+    Console.WriteLine($"Member {memberName}\nYearly fee:{yearlyFee}");
+}
+Console.WriteLine("please write a number:");
+int numberInput;
+bool isNumberInput = int.TryParse(Console.ReadLine(), out numberInput);
+if (isNumberInput ==  false)
+{
+    Console.WriteLine("number is invalid try again");
+}
+else
+{
+    if (numberInput % 2 == 0)
+    {
+        Console.WriteLine("number is zoj");
+    }
+    else
+    {
+        Console.WriteLine("number is fard");
+    }
 }
 Console.WriteLine("give me your age:");
-int memberage = int.Parse(Console.ReadLine());
-if (memberage < 13)
+int memberAge;
+bool isAgeNumber = int.TryParse(Console.ReadLine(), out memberAge);
+if (isAgeNumber == false || memberAge < 0)
 {
-    Console.WriteLine("member is kid");
-}
-else if (memberage >= 13 && memberage <= 17)
-{
-    Console.WriteLine("member is teen");
+    Console.WriteLine("Invalid age");
 }
 else
 {
-    Console.WriteLine("member is adult");
+    if (memberAge < 13)
+    {
+        Console.WriteLine("member is kid");
+        Console.WriteLine("Youth membership");
+    }
+    else if (memberAge >= 13 && memberAge <= 17)
+    {
+        Console.WriteLine("member is teen");
+        Console.WriteLine("Youth membership");
+    }
+    else
+    {
+        Console.WriteLine("member is adult");
+        Console.WriteLine("Adult membership");
+    }
 }
 Console.WriteLine("Has the fee been paid? y/n");
 string feeInput = Console.ReadLine();
@@ -50,17 +74,14 @@ else if (feeInput == "n")
 {
     Console.WriteLine("Payment required.");
 }
-if (memberage < 18)
-{
-    Console.WriteLine("Youth membership");
-}
-else
-{
-    Console.WriteLine("Adult membership");
-}
-
 Console.WriteLine("How many members do you want to register?");
-int registerCount = int.Parse(Console.ReadLine());
+int registerCount;
+bool isCountNumber = int.TryParse(Console.ReadLine(), out registerCount);
+if (isCountNumber == false || registerCount < 0)
+{
+    Console.WriteLine("Invalid count");
+    registerCount = 0;
+}
 decimal totalFee = 0;
 
 for (int i = 0; i < registerCount; i++)
@@ -68,13 +89,18 @@ for (int i = 0; i < registerCount; i++)
     Console.WriteLine("give name for membership:");
     string newMemberName = Console.ReadLine();
     Console.WriteLine("give fee for membership:");
-    decimal newMemberFee = decimal.Parse(Console.ReadLine());
+    decimal newMemberFee;
+    bool isNewFeeNumber = decimal.TryParse(Console.ReadLine(), out newMemberFee);
+    if (isNewFeeNumber == false)
+    {
+        Console.WriteLine("Invalid fee, skipped.");
+        continue;
+    }
     decimal memberYearlyFee = newMemberFee * 12;
     Console.WriteLine(memberYearlyFee);
     totalFee += memberYearlyFee;
 }
 Console.WriteLine(totalFee);
-
 int[] memberIds = { 101, 102, 103, 104 };
 bool running = true;
 while (running)
@@ -104,13 +130,19 @@ while (running)
             Console.WriteLine("enter your name:");
             string viewMemberName = Console.ReadLine();
             Console.WriteLine("give your fee cost:");
-            decimal tuitionFee = decimal.Parse(Console.ReadLine());
+            decimal tuitionFee;
+            bool isTuitionNumber = decimal.TryParse(Console.ReadLine(), out tuitionFee);
+            if (isTuitionNumber == false)
+            {
+                Console.WriteLine("invalid data");
+                break;
+            }
             string feePayment;
 
 
             Console.WriteLine("Has the fee been paid? (y/n)");
-            string feepaid = Console.ReadLine();
-            bool isPaid = feepaid == "y";
+            string feePaidInput = Console.ReadLine();
+            bool isPaid = feePaidInput == "y";
             feePayment = isPaid ? "paid" : "Payment required";
             Console.WriteLine($"{viewMemberName} has {tuitionFee} and {feePayment}.");
             break;
@@ -120,7 +152,13 @@ while (running)
             Console.WriteLine("give your active status (y/n):");
             string? isActive = Console.ReadLine();
             Console.WriteLine("give your remaining capacity status:");
-            int remainingCapacity = int.Parse(Console.ReadLine());
+            int remainingCapacity;
+            bool isCapacityNumber = int.TryParse(Console.ReadLine(), out remainingCapacity);
+            if (isCapacityNumber == false)
+            {
+                Console.WriteLine("invalid data");
+                break;
+            }
             if (isActive == "y")
             {
                 if (remainingCapacity > 0)
@@ -148,11 +186,17 @@ while (running)
             break;
         case 3:
             Console.WriteLine("Give member id please:");
-            int memberid = int.Parse(Console.ReadLine());
+            int searchId;
+            bool isSearchId = int.TryParse(Console.ReadLine(), out searchId);
+            if (isSearchId  == false)
+            {
+                Console.WriteLine("invalid data");
+                break;
+            }
             bool found = false;
             for (int i = 0; i < memberIds.Length; i++)
             {
-                if (memberid == memberIds[i])
+                if (searchId == memberIds[i])
                 {
                     found = true;
                     break;
