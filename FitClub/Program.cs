@@ -75,11 +75,13 @@ for (int i = 0; i < registerCount; i++)
 }
 Console.WriteLine(totalFee);
 
+int[] memberIds = { 101, 102, 103, 104 };
 bool running = true;
 while (running)
 {
     Console.WriteLine("1 - View member");
     Console.WriteLine("2 - Check reservation");
+    Console.WriteLine("3 - Search member by ID");
     Console.WriteLine("0 - Exit");
     Console.WriteLine("Choose an option:");
     int choice;
@@ -111,7 +113,7 @@ while (running)
             bool isPaid = feepaid == "y";
             feePayment = isPaid ? "paid" : "Payment required";
             Console.WriteLine($"{viewMemberName} has {tuitionFee} and {feePayment}.");
-                break;
+            break;
         case 2:
             Console.WriteLine("Check reservation selected");
 
@@ -144,8 +146,29 @@ while (running)
             }
 
             break;
+        case 3:
+            Console.WriteLine("Give member id please:");
+            int memberid = int.Parse(Console.ReadLine());
+            bool found = false;
+            for (int i = 0; i < memberIds.Length; i++)
+            {
+                if (memberid == memberIds[i])
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+            {
+                Console.WriteLine("Member found");
+            }
+            else
+            {
+                Console.WriteLine("Not found");
+            }
+            break;
         default:
-            Console.WriteLine("Invalid choice, choose again please (0/1/2)");
+            Console.WriteLine("Invalid choice, choose again please (0/1/2/3)");
             break;
     }
 }
