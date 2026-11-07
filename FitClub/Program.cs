@@ -1,14 +1,16 @@
-﻿Console.WriteLine("FitClub");
-Console.WriteLine("=======");
-Console.WriteLine("Gym Management System");
+﻿PrintHeader("FitClub - Gym Management System");
+
 string gymName = "FitClub";
 int memberCount = 120;
 Console.WriteLine($"{gymName} has {memberCount} members.");
+
 string city = "Tehran";
 int age = 25;
 Console.WriteLine($"FitClub now is available in {city} and Average age at registration is {age}");
+
 Console.WriteLine("please write member name:");
 string memberName = Console.ReadLine();
+
 Console.WriteLine("please write Monthly tuition fee:");
 decimal memberFee;
 bool isFeeNumber = decimal.TryParse(Console.ReadLine(), out memberFee);
@@ -18,27 +20,20 @@ if (isFeeNumber == false || memberFee < 0)
 }
 else
 {
-    decimal yearlyFee = memberFee * 12;
+    decimal yearlyFee = CalculateYearlyFee(memberFee);
     Console.WriteLine($"Member {memberName}\nYearly fee:{yearlyFee}");
 }
-Console.WriteLine("please write a number:");
-int numberInput;
-bool isNumberInput = int.TryParse(Console.ReadLine(), out numberInput);
-if (isNumberInput ==  false)
+
+int numberInput = ReadInt("please write a number:");
+if (numberInput % 2 == 0)
 {
-    Console.WriteLine("number is invalid try again");
+    Console.WriteLine("number is zoj");
 }
 else
 {
-    if (numberInput % 2 == 0)
-    {
-        Console.WriteLine("number is zoj");
-    }
-    else
-    {
-        Console.WriteLine("number is fard");
-    }
+    Console.WriteLine("number is fard");
 }
+
 Console.WriteLine("give me your age:");
 int memberAge;
 bool isAgeNumber = int.TryParse(Console.ReadLine(), out memberAge);
@@ -48,22 +43,9 @@ if (isAgeNumber == false || memberAge < 0)
 }
 else
 {
-    if (memberAge < 13)
-    {
-        Console.WriteLine("member is kid");
-        Console.WriteLine("Youth membership");
-    }
-    else if (memberAge >= 13 && memberAge <= 17)
-    {
-        Console.WriteLine("member is teen");
-        Console.WriteLine("Youth membership");
-    }
-    else
-    {
-        Console.WriteLine("member is adult");
-        Console.WriteLine("Adult membership");
-    }
+    Console.WriteLine(GetMembershipType(memberAge));
 }
+
 Console.WriteLine("Has the fee been paid? y/n");
 string feeInput = Console.ReadLine();
 if (feeInput == "y")
@@ -74,20 +56,19 @@ else if (feeInput == "n")
 {
     Console.WriteLine("Payment required.");
 }
-Console.WriteLine("How many members do you want to register?");
-int registerCount;
-bool isCountNumber = int.TryParse(Console.ReadLine(), out registerCount);
-if (isCountNumber == false || registerCount < 0)
+
+int registerCount = ReadInt("How many members do you want to register?");
+if (registerCount < 0)
 {
-    Console.WriteLine("Invalid count");
     registerCount = 0;
 }
-decimal totalFee = 0;
 
+decimal totalFee = 0;
 for (int i = 0; i < registerCount; i++)
 {
     Console.WriteLine("give name for membership:");
     string newMemberName = Console.ReadLine();
+
     Console.WriteLine("give fee for membership:");
     decimal newMemberFee;
     bool isNewFeeNumber = decimal.TryParse(Console.ReadLine(), out newMemberFee);
@@ -96,39 +77,32 @@ for (int i = 0; i < registerCount; i++)
         Console.WriteLine("Invalid fee, skipped.");
         continue;
     }
-    decimal memberYearlyFee = newMemberFee * 12;
-    Console.WriteLine(memberYearlyFee);
+
+    decimal memberYearlyFee = CalculateYearlyFee(newMemberFee);
     totalFee += memberYearlyFee;
+    Console.WriteLine($"{newMemberName}: yearly fee {memberYearlyFee}");
 }
-Console.WriteLine(totalFee);
+Console.WriteLine($"Total yearly fee: {totalFee}");
+
 int[] memberIds = { 101, 102, 103, 104 };
 bool running = true;
 while (running)
 {
-    Console.WriteLine("1 - View member");
-    Console.WriteLine("2 - Check reservation");
-    Console.WriteLine("3 - Search member by ID");
-    Console.WriteLine("0 - Exit");
-    Console.WriteLine("Choose an option:");
-    int choice;
-    string input = Console.ReadLine();
-    bool isNumber = int.TryParse(input, out choice);
+    PrintMenu();
+    int choice = ReadInt("Choose an option:");
 
-    if (isNumber == false)
-    {
-        Console.WriteLine("Invalid input, please enter a number.");
-        continue;
-    }
     switch (choice)
     {
         case 0:
             Console.WriteLine("Exit");
             running = false;
             break;
+
         case 1:
             Console.WriteLine("View member selected");
             Console.WriteLine("enter your name:");
             string viewMemberName = Console.ReadLine();
+
             Console.WriteLine("give your fee cost:");
             decimal tuitionFee;
             bool isTuitionNumber = decimal.TryParse(Console.ReadLine(), out tuitionFee);
@@ -137,82 +111,107 @@ while (running)
                 Console.WriteLine("invalid data");
                 break;
             }
-            string feePayment;
-
 
             Console.WriteLine("Has the fee been paid? (y/n)");
             string feePaidInput = Console.ReadLine();
             bool isPaid = feePaidInput == "y";
-            feePayment = isPaid ? "paid" : "Payment required";
+            string feePayment = isPaid ? "paid" : "Payment required";
             Console.WriteLine($"{viewMemberName} has {tuitionFee} and {feePayment}.");
             break;
+
         case 2:
             Console.WriteLine("Check reservation selected");
-
             Console.WriteLine("give your active status (y/n):");
             string? isActive = Console.ReadLine();
-            Console.WriteLine("give your remaining capacity status:");
-            int remainingCapacity;
-            bool isCapacityNumber = int.TryParse(Console.ReadLine(), out remainingCapacity);
-            if (isCapacityNumber == false)
-            {
-                Console.WriteLine("invalid data");
-                break;
-            }
-            if (isActive == "y")
-            {
-                if (remainingCapacity > 0)
-                {
-                    Console.WriteLine("Booking is permitted.");
-                }
-                else if (remainingCapacity == 0)
-                {
-                    Console.WriteLine("Capacity is full.");
-                }
-                else
-                {
-                    Console.WriteLine("Invalid capacity.");
-                }
-            }
-            else if (isActive == "n")
-            {
-                Console.WriteLine("Membership is inactive.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid status. Enter y or n.");
-            }
+            int remainingCapacity = ReadInt("give your remaining capacity status:");
 
-            break;
-        case 3:
-            Console.WriteLine("Give member id please:");
-            int searchId;
-            bool isSearchId = int.TryParse(Console.ReadLine(), out searchId);
-            if (isSearchId  == false)
+            bool active = isActive == "y";
+            if (CheckReservation(active, remainingCapacity))
             {
-                Console.WriteLine("invalid data");
-                break;
-            }
-            bool found = false;
-            for (int i = 0; i < memberIds.Length; i++)
-            {
-                if (searchId == memberIds[i])
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (found)
-            {
-                Console.WriteLine("Member found");
+                Console.WriteLine("Booking is permitted.");
             }
             else
             {
-                Console.WriteLine("Not found");
+                Console.WriteLine("Booking is not possible.");
             }
             break;
+
+        case 3:
+            int searchId = ReadInt("Give member id please:");
+            if (FindMemberIndex(memberIds, searchId, out int pos))
+            {
+                Console.WriteLine($"Member {searchId} found at index {pos}");
+            }
+            else
+            {
+                Console.WriteLine($"Member {searchId} not found");
+            }
+            break;
+
         default:
             Console.WriteLine("Invalid choice, choose again please (0/1/2/3)");
             break;
     }
+}
+
+// ===== توابع =====
+
+void PrintHeader(string header)
+{
+    Console.WriteLine("=====\n" + header + "\n=====");
+}
+
+int ReadInt(string message)
+{
+    while (true)
+    {
+        Console.WriteLine(message);
+        string? input = Console.ReadLine();
+        if (int.TryParse(input, out int number))
+        {
+            return number;
+        }
+        Console.WriteLine("Invalid input. Please enter a whole number.");
+    }
+}
+
+decimal CalculateYearlyFee(decimal monthlyFee, int months = 12)
+{
+    return monthlyFee * months;
+}
+
+void PrintMenu()
+{
+    Console.WriteLine("1 - View member");
+    Console.WriteLine("2 - Check reservation");
+    Console.WriteLine("3 - Search member by ID");
+    Console.WriteLine("0 - Exit");
+}
+
+bool FindMemberIndex(int[] ids, int id, out int index)
+{
+    index = -1;
+    for (int i = 0; i < ids.Length; i++)
+    {
+        if (ids[i] == id)
+        {
+            index = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+string GetMembershipType(int memberAge)
+{
+    if (memberAge < 18)
+    {
+        return "Youth membership";
+    }
+    return "Adult membership";
+}
+
+bool CheckReservation(bool isActive, int remainingCapacity)
+{
+    return isActive && remainingCapacity > 0;
 }
